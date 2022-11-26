@@ -5,6 +5,11 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 public class ImageUtil {
+    /**
+     * This method for compress image to byte[]
+     * @param data
+     * @return byte[]
+     */
     public static byte[] compressImage(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
@@ -24,6 +29,11 @@ public class ImageUtil {
         return outputStream.toByteArray();
     }
 
+    /**
+     * This method for decompress image to byte[]
+     * @param data
+     * @return byte[]
+     */
     public static byte[] decompressImage(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);

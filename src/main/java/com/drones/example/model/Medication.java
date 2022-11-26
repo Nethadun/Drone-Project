@@ -22,5 +22,6 @@ public class Medication {
     private String name;
     @Column(name = "code")
     private String code;
+    @Lob
     private byte[] image;
 }
