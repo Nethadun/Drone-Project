@@ -21,7 +21,7 @@ public class MedicationController {
     /**
      * This method for medication save details
      * @param medicationDTO
-     * @return
+     * @return ResponseDTO
      */
     @PostMapping("/save")
     public ResponseDTO save(@ModelAttribute MedicationDTO medicationDTO){
