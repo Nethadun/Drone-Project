@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,9 +19,10 @@ public class DroneMedication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "drone_id")
-    private Long droneId;
-    @Column(name = "medication_id")
-    private Long medicationId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Drone drone;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Medication medication;
+    @CreationTimestamp
     private Timestamp createdAt;
 }

@@ -1,5 +1,7 @@
 package com.drones.example.service.impl;
 
+import com.drones.example.dto.enums.Model;
+import com.drones.example.dto.enums.State;
 import com.drones.example.dto.request.DroneDTO;
 import com.drones.example.dto.response.ResponseDTO;
 import com.drones.example.model.Drone;
@@ -56,8 +58,8 @@ public class DroneServiceImpl implements DroneService {
     private Optional<Drone> entitySet(DroneDTO droneDTO){
         log.info("DroneServiceImpl.entitySet method accessed");
         Drone drone = new Drone();
-        drone.setModel(droneDTO.getModel());
-        drone.setState(droneDTO.getState());
+        drone.setModel(Model.valueOf(droneDTO.getModel()));
+        drone.setState(State.valueOf(droneDTO.getState()));
         drone.setSerial(droneDTO.getSerial());
         drone.setWeightLimit(droneDTO.getWeightLimit());
         drone.setBatteryCapacity(droneDTO.getBatteryCapacity());

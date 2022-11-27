@@ -1,5 +1,7 @@
 package com.drones.example.model;
 
+import com.drones.example.dto.enums.Model;
+import com.drones.example.dto.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,14 +19,13 @@ public class Drone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "serial")
     private Long serial;
-    @Column(name = "model")
-    private String model;
+    @Enumerated
+    private Model model;
     @Column(name = "weight_limit")
     private Integer weightLimit;
     @Column(name = "battery_capacity")
     private Double batteryCapacity;
-    @Column(name = "state")
-    private String state;
+    @Enumerated
+    private State state;
 }
