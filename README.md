@@ -22,11 +22,3 @@ Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/
 ```shell
 mvn spring-boot:run
 ```
-
-## Deploying the application to OpenShift
-
-The easiest way to deploy the sample application to OpenShift is to use the [OpenShift CLI](https://docs.openshift.org/latest/cli_reference/index.html):
-
-```shell
-oc new-app codecentric/springboot-maven3-centos~https://github.com/Nethadun/Drone-Project
-```
