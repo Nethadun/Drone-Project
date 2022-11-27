@@ -22,4 +22,8 @@ public class DroneServiceImplTest {
         repository.save(drone);
         assertNotNull(repository.findById(3L).get());
     }
+
+    public void testCheckingAvailableDronesForLoading(){
+
+    }
 }
