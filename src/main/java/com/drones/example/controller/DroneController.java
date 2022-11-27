@@ -26,5 +26,24 @@ public class DroneController {
         return droneService.save(droneDTO);
     }
 
+    /**
+     * This method for checking available drones for loading
+     * @return ResponseDTO
+     */
+    @GetMapping("/drone-state/loading")
+    public ResponseDTO checkingAvailableDronesForLoading(){
+        log.info("DroneController.checkingAvailableDronesForLoading method accessed");
+        return droneService.checkingAvailableDronesForLoading();
+    }
+    /**
+     * This method for checking given drone battery level
+     * @return ResponseDTO
+     */
+    @GetMapping("/drone-state")
+    public ResponseDTO checkDroneBatteryLevel(@RequestParam Long droneId){
+        log.info("DroneController.checkingAvailableDronesForLoading method accessed");
+        return droneService.checkDroneBatteryLevel(droneId);
+    }
+
 
 }

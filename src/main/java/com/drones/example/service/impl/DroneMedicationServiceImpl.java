@@ -1,6 +1,4 @@
 package com.drones.example.service.impl;
-
-import com.drones.example.dto.enums.State;
 import com.drones.example.dto.request.DroneMedicationDTO;
 import com.drones.example.dto.response.ResponseDTO;
 import com.drones.example.model.Drone;
@@ -60,16 +58,19 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
         return responseDTO;
     }
 
+    /**
+     * This method for load drone with medication items
+     * @param droneId
+     * @return ResponseDTO
+     */
     @Override
     public ResponseDTO loadDroneWithMedication(Long droneId) {
         log.info("DroneMedicationServiceImpl.loadDroneWithMedication method accessed");
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             List<DroneMedication> allByDrone = droneMedicationRepository.findAll();
-            //validate drone battery level
-            ResponseDTO responseDTO1 = validateDrone(droneId);
-            if (responseDTO1.getHttpStatus().equals(HttpStatus.OK.value())){
-                List<DroneMedication> collect = allByDrone.stream().filter(droneMedication -> droneMedication.getDrone().getId().equals(droneId)).collect(Collectors.toList());
+            List<DroneMedication> collect = allByDrone.stream().filter(droneMedication -> droneMedication.getDrone().getId().equals(droneId)).collect(Collectors.toList());
+            if (!collect.isEmpty()){
                 responseDTO.setHttpStatus(HttpStatus.FOUND.value());
                 responseDTO.setMessage("Record found");
                 responseDTO.setPayload(collect);
@@ -77,7 +78,6 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
                 responseDTO.setHttpStatus(HttpStatus.NOT_FOUND.value());
                 responseDTO.setMessage("Record not found");
             }
-
         }catch (Exception e){
             log.error("Error in DroneMedicationServiceImpl.loadDroneWithMedication method : {}",e.getMessage());
             responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST.value());
@@ -86,33 +86,68 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
         return responseDTO;
     }
 
-    private ResponseDTO validateDrone(Long droneId) {
-        log.info("DroneMedicationServiceImpl.validateDrone method accessed");
+    /**
+     * This method for load all drone with medication items
+     * @return ResponseDTO
+     */
+    @Override
+    public ResponseDTO loadAllDroneWithMedication() {
+        log.info("DroneMedicationServiceImpl.loadAllDroneWithMedication method accessed");
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            Optional<Drone> byId = droneRepository.findById(droneId);
-            if (byId.isPresent()){
-                Drone drone = byId.get();
-                if (drone.getState().equals(State.LOADING)){
-                    responseDTO.setHttpStatus(HttpStatus.NOT_ACCEPTABLE.value());
-                    responseDTO.setMessage("Drone battery stage is : "+ drone.getState());
-                }else {
-                    responseDTO.setHttpStatus(HttpStatus.OK.value());
-                    responseDTO.setMessage("Drone ready to use");
-                }
+            List<DroneMedication> allByDrone = droneMedicationRepository.findAll();
+            if (!allByDrone.isEmpty()){
+                responseDTO.setHttpStatus(HttpStatus.FOUND.value());
+                responseDTO.setMessage("Record found");
+                responseDTO.setPayload(allByDrone);
             }else {
                 responseDTO.setHttpStatus(HttpStatus.NOT_FOUND.value());
-                responseDTO.setMessage("Drone Not Found");
+                responseDTO.setMessage("Record not found");
             }
         }catch (Exception e){
-            log.error("Error in DroneMedicationServiceImpl.validateDrone method : {}",e.getMessage());
+            log.error("Error in DroneMedicationServiceImpl.loadAllDroneWithMedication method : {}",e.getMessage());
             responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST.value());
             responseDTO.setMessage(e.getMessage());
         }
-
         return responseDTO;
     }
 
+//    /**
+//     * This method for validate drone battery level
+//     * @param droneId
+//     * @return ResponseDTO
+//     */
+//    private ResponseDTO validateDrone(Long droneId) {
+//        log.info("DroneMedicationServiceImpl.validateDrone method accessed");
+//        ResponseDTO responseDTO = new ResponseDTO();
+//        try {
+//            Optional<Drone> byId = droneRepository.findById(droneId);
+//            if (byId.isPresent()){
+//                Drone drone = byId.get();
+//                if (drone.getState().equals(State.LOADING)){
+//                    responseDTO.setHttpStatus(HttpStatus.NOT_ACCEPTABLE.value());
+//                    responseDTO.setMessage("Drone battery stage is : "+ drone.getState());
+//                }else {
+//                    responseDTO.setHttpStatus(HttpStatus.OK.value());
+//                    responseDTO.setMessage("Drone ready to use");
+//                }
+//            }else {
+//                responseDTO.setHttpStatus(HttpStatus.NOT_FOUND.value());
+//                responseDTO.setMessage("Drone Not Found");
+//            }
+//        }catch (Exception e){
+//            log.error("Error in DroneMedicationServiceImpl.validateDrone method : {}",e.getMessage());
+//            responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+//            responseDTO.setMessage(e.getMessage());
+//        }
+//
+//        return responseDTO;
+//    }
+    /**
+     * This method for map dto to model
+     * @param droneMedicationDTO
+     * @return Optional<Drone>
+     */
     private List<DroneMedication> entitySet(DroneMedicationDTO droneMedicationDTO){
         log.info("DroneMedicationServiceImpl.entitySet method accessed");
         List<Medication> allById = medicationRepository.findAllById(droneMedicationDTO.getMedicationList());

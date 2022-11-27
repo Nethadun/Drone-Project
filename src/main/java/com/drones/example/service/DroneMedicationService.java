@@ -10,5 +10,15 @@ public interface DroneMedicationService {
      * @return ResponseDTO
      */
     public ResponseDTO addedMedicationForDrones(DroneMedicationDTO droneMedicationDTO);
+    /**
+     * This method for load drone with medication items
+     * @param droneId
+     * @return ResponseDTO
+     */
     public ResponseDTO loadDroneWithMedication(Long droneId);
+    /**
+     * This method for load all drone with medication items
+     * @return ResponseDTO
+     */
+    public ResponseDTO loadAllDroneWithMedication();
 }

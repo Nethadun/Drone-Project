@@ -36,4 +36,13 @@ public class DispatchController {
         log.info("DroneMedicationService.loadDroneWithMedication method accessed");
         return droneMedicationService.loadDroneWithMedication(droneId);
     }
+    /**
+     * This method for load all drone with medication items
+     * @return ResponseDTO
+     */
+    @GetMapping("/load/all/drone-medications")
+    public ResponseDTO loadAllDroneWithMedication(){
+        log.info("DroneMedicationService.loadAllDroneWithMedication method accessed");
+        return droneMedicationService.loadAllDroneWithMedication();
+    }
 }

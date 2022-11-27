@@ -48,7 +48,11 @@ public class MedicationServiceImpl implements MedicationService {
         }
         return responseDTO;
     }
-
+    /**
+     * This method for map dto to model
+     * @param medicationDTO
+     * @return Optional<Drone>
+     */
     private Optional<Medication> entitySet(MedicationDTO medicationDTO){
         log.info("MedicationServiceImpl.entitySet method accessed");
         Medication medication = new Medication();
