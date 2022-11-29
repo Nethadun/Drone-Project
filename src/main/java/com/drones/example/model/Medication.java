@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @AllArgsConstructor
@@ -18,6 +19,7 @@ public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Pattern(regexp="^[A-Za-z]*$",message = "Invalid Input")
     @Column(name = "name")
     private String name;
     @Column(name = "code")
