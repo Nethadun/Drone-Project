@@ -19,6 +19,7 @@ public class DroneController {
      * This method for save drone details
      * @param droneDTO
      * @return ResponseDTO
+     * @Author Nethadun
      */
     @PostMapping("/save")
     public ResponseDTO save(@RequestBody DroneDTO droneDTO){
@@ -29,6 +30,7 @@ public class DroneController {
     /**
      * This method for checking available drones for loading
      * @return ResponseDTO
+     * @Author Nethadun
      */
     @GetMapping("/drone-state/loading")
     public ResponseDTO checkingAvailableDronesForLoading(){
@@ -38,6 +40,7 @@ public class DroneController {
     /**
      * This method for checking given drone battery level
      * @return ResponseDTO
+     * @Author Nethadun
      */
     @GetMapping("/drone-state")
     public ResponseDTO checkDroneBatteryLevel(@RequestParam Long droneId){

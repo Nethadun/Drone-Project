@@ -58,7 +58,7 @@ public class DroneServiceImpl implements DroneService {
      */
     @Override
     public ResponseDTO checkingAvailableDronesForLoading() {
-        log.info("DroneMedicationServiceImpl.validateDrone method accessed");
+        log.info("DroneServiceImpl.validateDrone method accessed");
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             List<Drone> all = droneRepository.findAll();
@@ -72,7 +72,7 @@ public class DroneServiceImpl implements DroneService {
                 responseDTO.setMessage("No drones found");
             }
         }catch (Exception e){
-            log.error("Error in DroneMedicationServiceImpl.validateDrone method : {}",e.getMessage());
+            log.error("Error in DroneServiceImpl.validateDrone method : {}",e.getMessage());
             responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST.value());
             responseDTO.setMessage(e.getMessage());
         }
@@ -85,7 +85,7 @@ public class DroneServiceImpl implements DroneService {
      */
     @Override
     public ResponseDTO checkDroneBatteryLevel(Long droneId) {
-        log.info("DroneMedicationServiceImpl.checkDroneBatteryLevel method accessed");
+        log.info("DroneServiceImpl.checkDroneBatteryLevel method accessed");
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             Optional<Drone> byId = droneRepository.findById(droneId);
@@ -99,7 +99,7 @@ public class DroneServiceImpl implements DroneService {
                 responseDTO.setMessage("Drone Not Found");
             }
         }catch (Exception e){
-            log.error("Error in DroneMedicationServiceImpl.validateDrone method : {}",e.getMessage());
+            log.error("Error in DroneServiceImpl.validateDrone method : {}",e.getMessage());
             responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST.value());
             responseDTO.setMessage(e.getMessage());
         }
@@ -114,11 +114,15 @@ public class DroneServiceImpl implements DroneService {
     private Optional<Drone> entitySet(DroneDTO droneDTO){
         log.info("DroneServiceImpl.entitySet method accessed");
         Drone drone = new Drone();
-        drone.setModel(Model.valueOf(droneDTO.getModel()));
-        drone.setState(State.valueOf(droneDTO.getState()));
-        drone.setSerial(droneDTO.getSerial());
-        drone.setWeightLimit(droneDTO.getWeightLimit());
-        drone.setBatteryCapacity(droneDTO.getBatteryCapacity());
+        try{
+            drone.setModel(Model.valueOf(droneDTO.getModel()));
+            drone.setState(State.valueOf(droneDTO.getState()));
+            drone.setSerial(droneDTO.getSerial());
+            drone.setWeightLimit(droneDTO.getWeightLimit());
+            drone.setBatteryCapacity(droneDTO.getBatteryCapacity());
+        }catch (Exception e){
+            log.error("Error in DroneServiceImpl.entitySet method : {}",e.getMessage());
+        }
         return Optional.of(drone);
     }
 }

@@ -19,6 +19,7 @@ public class DispatchController {
      * This method for added medications for each drones
      * @param droneMedicationDTO
      * @return ResponseDTO
+     * @Author Nethadun
      */
     @PostMapping("/save/medication/list")
     public ResponseDTO AddedMedicationForDrones(@RequestBody DroneMedicationDTO droneMedicationDTO){
@@ -30,6 +31,7 @@ public class DispatchController {
      * This method for load drone with medication items
      * @param droneId
      * @return ResponseDTO
+     * @Author Nethadun
      */
     @GetMapping("/load/drone-medications")
     public ResponseDTO loadDroneWithMedication(@RequestParam Long droneId){
@@ -39,6 +41,7 @@ public class DispatchController {
     /**
      * This method for load all drone with medication items
      * @return ResponseDTO
+     * @Author Nethadun
      */
     @GetMapping("/load/all/drone-medications")
     public ResponseDTO loadAllDroneWithMedication(){

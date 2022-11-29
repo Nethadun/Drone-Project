@@ -69,7 +69,9 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             List<DroneMedication> allByDrone = droneMedicationRepository.findAll();
-            List<DroneMedication> collect = allByDrone.stream().filter(droneMedication -> droneMedication.getDrone().getId().equals(droneId)).collect(Collectors.toList());
+            // filter for provided drone id medications
+            List<DroneMedication> collect = allByDrone.stream().filter(droneMedication -> droneMedication.getDrone()
+                    .getId().equals(droneId)).collect(Collectors.toList());
             if (!collect.isEmpty()){
                 responseDTO.setHttpStatus(HttpStatus.FOUND.value());
                 responseDTO.setMessage("Record found");
@@ -150,19 +152,23 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
      */
     private List<DroneMedication> entitySet(DroneMedicationDTO droneMedicationDTO){
         log.info("DroneMedicationServiceImpl.entitySet method accessed");
-        List<Medication> allById = medicationRepository.findAllById(droneMedicationDTO.getMedicationList());
         List<DroneMedication> medicationList=  new ArrayList<>();
-        allById.forEach(medication -> {
-            DroneMedication droneMedication = new DroneMedication();
-            droneMedication.setMedication(medication);
-            Optional<Drone> byId = droneRepository.findById(droneMedicationDTO.getDroneId());
-            if (byId.isPresent()){
-                Drone drone = byId.get();
-                droneMedication.setDrone(drone);
-            }
-            medicationList.add(droneMedication);
+        try {
+            List<Medication> allById = medicationRepository.findAllById(droneMedicationDTO.getMedicationList());
+            allById.forEach(medication -> {
+                DroneMedication droneMedication = new DroneMedication();
+                droneMedication.setMedication(medication);
+                Optional<Drone> byId = droneRepository.findById(droneMedicationDTO.getDroneId());
+                if (byId.isPresent()){
+                    Drone drone = byId.get();
+                    droneMedication.setDrone(drone);
+                }
+                medicationList.add(droneMedication);
 
-        });
+            });
+        }catch (Exception e){
+            log.error("Error in DroneMedicationServiceImpl.entitySet method : {}",e.getMessage());
+        }
         return medicationList;
     }
 }
